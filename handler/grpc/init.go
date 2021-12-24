@@ -6,11 +6,12 @@ import (
 	"strconv"
 
 	pb "github.com/Shofyan/StokbitInterview/handler/grpc/proto"
-	svc "github.com/Shofyan/StokbitInterview/service/movie"
+	service "github.com/Shofyan/StokbitInterview/service/movie"
 )
 
 type Server struct {
 	pb.UnimplementedStockbitServer
+	SvcMovie service.SvcMovie
 }
 
 // SayHello implements helloworld.GreeterServer
@@ -18,7 +19,7 @@ func (s *Server) GetOneMovie(ctx context.Context, in *pb.GetOneMovieRequest) (*p
 	log.Printf("Received: %v", in.GetId())
 
 	imdbID := in.GetId()
-	m := svc.GetOneMovie(imdbID)
+	m := s.SvcMovie.GetOneMovie(imdbID)
 
 	rating := []*pb.Rating{}
 	for _, v := range m.Ratings {
@@ -62,7 +63,7 @@ func (s *Server) SearchMovie(ctx context.Context, in *pb.SearchMovieRequest) (*p
 	key := in.GetKey()
 	page := in.GetPage()
 
-	m := svc.SearchMovie(key, page)
+	m := s.SvcMovie.SearchMovie(key, page)
 
 	movies := []*pb.MovieSummary{}
 	for _, v := range m.Search {
