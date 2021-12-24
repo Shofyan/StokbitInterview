@@ -1,9 +1,16 @@
 package repository
 
+//go:generate mockgen -destination=movie_mock.go -package=repository -source=types.go
+
 type RepoMovie struct{}
 
 func New() *RepoMovie {
 	return &RepoMovie{}
+}
+
+type IRepoMovie interface {
+	GetOneMovie(imdbID string) Movie
+	SearchMovie(key string, page string) SeachMovie
 }
 
 type Movie struct {
