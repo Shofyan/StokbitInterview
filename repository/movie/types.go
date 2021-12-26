@@ -9,8 +9,8 @@ func New() *RepoMovie {
 }
 
 type IRepoMovie interface {
-	GetOneMovie(imdbID string) Movie
-	SearchMovie(key string, page string) SeachMovie
+	GetOneMovie(imdbID string) (Movie, error)
+	SearchMovie(key string, page string) (SeachMovie, error)
 }
 
 type Movie struct {

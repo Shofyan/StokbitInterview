@@ -9,17 +9,17 @@ import (
 
 	stGRPC "github.com/Shofyan/StokbitInterview/handler/grpc"
 	pb "github.com/Shofyan/StokbitInterview/handler/grpc/proto"
-	service "github.com/Shofyan/StokbitInterview/service/movie"
 )
 
 func main() {
 
+	NewGrpc := stGRPC.ServerNew()
 	lis, err := net.Listen("tcp", "localhost:5000")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterStockbitServer(s, &stGRPC.Server{SvcMovie: service.SvcMovie{}})
+	pb.RegisterStockbitServer(s, NewGrpc)
 	reflection.Register(s)
 	log.Printf("server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {

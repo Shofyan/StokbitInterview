@@ -14,12 +14,22 @@ type Server struct {
 	SvcMovie service.SvcMovie
 }
 
+func ServerNew() *Server {
+	return &Server{
+		SvcMovie: *service.New(),
+	}
+}
+
 // SayHello implements helloworld.GreeterServer
 func (s *Server) GetOneMovie(ctx context.Context, in *pb.GetOneMovieRequest) (*pb.GetOneMovieResponse, error) {
 	log.Printf("Received: %v", in.GetId())
 
 	imdbID := in.GetId()
-	m := s.SvcMovie.GetOneMovie(imdbID)
+	m, err := s.SvcMovie.GetOneMovie(imdbID)
+	if err != nil {
+		log.Println(err)
+		return nil, nil
+	}
 
 	rating := []*pb.Rating{}
 	for _, v := range m.Ratings {
@@ -63,7 +73,11 @@ func (s *Server) SearchMovie(ctx context.Context, in *pb.SearchMovieRequest) (*p
 	key := in.GetKey()
 	page := in.GetPage()
 
-	m := s.SvcMovie.SearchMovie(key, page)
+	m, err := s.SvcMovie.SearchMovie(key, page)
+	if err != nil {
+		log.Println(err)
+		return nil, nil
+	}
 
 	movies := []*pb.MovieSummary{}
 	for _, v := range m.Search {

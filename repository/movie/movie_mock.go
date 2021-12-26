@@ -34,29 +34,31 @@ func (m *MockIRepoMovie) EXPECT() *MockIRepoMovieMockRecorder {
 }
 
 // GetOneMovie mocks base method.
-func (m *MockIRepoMovie) GetOneMovie(imdbID string) Movie {
-//	m.ctrl.T.Helper()
+func (m *MockIRepoMovie) GetOneMovie(imdbID string) (Movie, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetOneMovie", imdbID)
 	ret0, _ := ret[0].(Movie)
-	return ret0
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // GetOneMovie indicates an expected call of GetOneMovie.
 func (mr *MockIRepoMovieMockRecorder) GetOneMovie(imdbID interface{}) *gomock.Call {
-//	mr.mock.ctrl.T.Helper()
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOneMovie", reflect.TypeOf((*MockIRepoMovie)(nil).GetOneMovie), imdbID)
 }
 
 // SearchMovie mocks base method.
-func (m *MockIRepoMovie) SearchMovie(key, page string) SeachMovie {
-//	m.ctrl.T.Helper()
+func (m *MockIRepoMovie) SearchMovie(key, page string) (SeachMovie, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SearchMovie", key, page)
 	ret0, _ := ret[0].(SeachMovie)
-	return ret0
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // SearchMovie indicates an expected call of SearchMovie.
 func (mr *MockIRepoMovieMockRecorder) SearchMovie(key, page interface{}) *gomock.Call {
-//	mr.mock.ctrl.T.Helper()
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchMovie", reflect.TypeOf((*MockIRepoMovie)(nil).SearchMovie), key, page)
 }

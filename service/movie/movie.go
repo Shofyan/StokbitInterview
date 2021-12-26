@@ -1,14 +1,28 @@
 package service
 
 import (
+	"log"
+
 	repository "github.com/Shofyan/StokbitInterview/repository/movie"
 )
 
-func (s *SvcMovie) GetOneMovie(imdbID string) repository.Movie {
-	return s.RepoMovie.GetOneMovie(imdbID)
+func (s *SvcMovie) GetOneMovie(imdbID string) (repository.Movie, error) {
+
+	m, err := s.RepoMovie.GetOneMovie(imdbID)
+	if err != nil {
+		log.Println(err)
+		return m, err
+	}
+	return m, nil
 }
 
-func (s *SvcMovie) SearchMovie(key string, page string) repository.SeachMovie {
+func (s *SvcMovie) SearchMovie(key string, page string) (repository.SeachMovie, error) {
 
-	return s.RepoMovie.SearchMovie(key, page)
+	m, err := s.RepoMovie.SearchMovie(key, page)
+	if err != nil {
+		log.Println(err)
+		return m, err
+	}
+
+	return m, nil
 }
